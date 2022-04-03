@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Material Design for Bootstrap</title>
+    <!-- MDB icon -->
+    <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" href="css/mdb.min.css">
+    <!-- Your custom styles (optional) -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/light/all.min.css" />
+    <link rel="stylesheet" href="css/custom.css">
+
+    <!-- GOOGLE SIGN IN-->
+    <meta name="google-signin-client_id" content="3251389578-5r5b36uskhbqpdpviiecf4jkeohgk43j.apps.googleusercontent.com" />
+    <script src="https://apis.google.com/js/platform.js" async defer>
+    </script>
+</head>
+
+<body>
+    <!-- Start your project here-->
+
+
+    <!-- Main Navigation-->
+    <header>
+       <!-- Navbar -->
+       <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style=" background-color: black;">
+        <div>
+            <div class="container">
+                <!-- Navbar brand -->
+                <a class="navbar-brand" href="index.html">
+                    <img src="img/quiz_icon.png" style="height: 2em;">
+                </a>
+                <div id="singIn" class="g-signin2" style="float: right; right: 1em; position: absolute; margin-right: 0; background-color: rgb(241,117,1); color: black; border-radius: 10px;" data-onsuccess="onSignIn"></div>
+                <div id="content"  style="float: right; right: 1em; position: absolute; margin-right: 9%; color: white; min-width: 100px; text-align: center;"> </div>
+                <a href="#" id="signOut" class="main-menu-item" style="float: right; right: 250px; position: absolute; margin-right: 0; display: none; text-align: right;" onclick="signOut()">SIGN OUT</a>
+
+                <script>
+                    
+
+                    function signOut() {
+                        gapi.auth2.getAuthInstance().signOut().then(function() {
+                            console.log('User signed out');
+                            var element = document.querySelector('#content');
+                            element.innerHTML = '';
+                            document.getElementById('signOut').style.display = 'none';
+                            document.getElementById('signIn').style.display = 'block';
+                        });
+                      //  document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+
+                        //$("#signIn").css("display", "block");
+
+                    }
+                </script>
+                <!--
+                <a class="logon-link" href="login.html" style="float: right; right: 2em; position: absolute;">zaloguj...</a>
+                <a href="#" style="float: right; right: 2em; position: absolute; display: none;"><img src="img/account_icon.png" style=" height: 2em;" alt=""></a>
+                -->
+            </div>
+
+                <div class="container w-100">
+                    <div class="w-100" style="background-color: black; margin: 0;min-width: 1000px;">
+                        <table class="w-100">
+                            <tbody class="w-100">
+                                <tr class="w-100">
+                                    <td scope="col" style="text-align: center;min-width: 750px;"><a href="dostepne_utwory.html" class="main-menu-item">Przeglądaj dostępne utwory</a></td>
+                                    <td scope="col" style="text-align: center; border-left: 1px solid white;min-width: 750px;"><a href="statistics.html" class="main-menu-item">Statystyki</a></td>
+                                </tr style="border-right: 1px solid white;">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- Navbar -->
+
+    </header>
+    <!-- /Main Navigation-->
+
+
+    <!-- Main Layout-->
+    <main class="mt-9" style="margin-top: -600px; padding-bottom: 70px;">
+
+        <div class="container my-container-color">
+
+            <h2 id="title-author" class="color-accent title-author" style="margin-top: 50px;">Title <i>Author</i></h2>
+
+            <div id="frame-holder" style="min-height: 200px;">
+                <!-- <iframe id="frame" src="">
+            </iframe>-->
+            </div>
+            <div id="lyrics" style="margin-top: -50px;">
+                <div id="preloader">
+                    <div id="loader"></div>
+                  </div>
+            </div>
+            <div style="margin-top: 50px;">
+                <button class="check-button" onclick="checkResult()" value="S p r a w d ź" data-toggle="modal" data-target="#centralModal">S p r a w d ź</button>
+            </div>
+
+
+            <!-- Central Modal Medium data-toggle="modal" data-target="#centralModal"-->
+            <div class="modal fade" id="centralModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content" style="padding: 30px;">
+                        <div>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+             </button>
+                            <h6 class="modal-title w-100" id="myModalLabel" style="margin-top: 30px;">Twój wynik:</h6>
+                        </div>
+                        <div id="modalBody" style="color: rgb(204,117,1); font-size: 5em; font-weight: bold; margin-top: 30px; text-align: center;">
+
+                        </div>
+                        <div style="margin-top: 30px; display: flex; text-align: right; justify-content: flex-end;">
+                            <button type="button" class="btn modal-button" data-dismiss="modal" style="margin-bottom: 10px; ">Zamknij</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Central Modal Medium -->
+
+        </div>
+    </main>
+    <!-- /Main Layout       src="https://www.youtube.com/embed/RVH5dn1cxAQ"-->
+
+
+    <!-- Footer -->
+    <footer>
+        <div>Zaawansowane Technologie Webowe 2021 - Chrząstek, Rudzka</div>
+    </footer>
+    <!-- /Footer -->
+
+    <!-- End your project here-->
+    <!-- jQuery -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+    <!-- Your custom scripts (optional) -->
+    <script type="text/javascript" src="game.js"></script>
+
+    <script type="text/javascript">
+    </script>
+    <script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
+</body>
+
+</html>

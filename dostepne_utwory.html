@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Material Design for Bootstrap</title>
+    <!-- MDB icon -->
+    <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" href="css/mdb.min.css">
+    <!-- Your custom styles (optional) -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/light/all.min.css" />
+    <link rel="stylesheet" href="css/custom.css">
+
+    <!-- GOOGLE SIGN IN-->
+    <meta name="google-signin-client_id" content="3251389578-5r5b36uskhbqpdpviiecf4jkeohgk43j.apps.googleusercontent.com" />
+    <script src="https://apis.google.com/js/platform.js" async defer>
+    </script>
+
+</head>
+
+<body>
+    <!-- Start your project here-->
+
+
+    <!-- Main Navigation-->
+    <header>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style=" background-color: black;">
+            <div>
+                <div class="container">
+                    <!-- Navbar brand -->
+                    <a class="navbar-brand" href="index.html">
+                        <img src="img/quiz_icon.png" style="height: 2em;">
+                    </a>
+                    <div id="singIn" class="g-signin2" style="float: right; right: 1em; position: absolute; margin-right: 0;" data-onsuccess="onSignIn"></div>
+                    <div id="content"  style="float: right; right: 1em; position: absolute; margin-right: 9%; color: white; min-width: 100px; text-align: center;"> </div>
+                    <a href="#" id="signOut" class="main-menu-item" style="float: right; right: 250px; position: absolute; margin-right: 0; display: none; text-align: right;" onclick="signOut()">SIGN OUT</a>
+
+                    <script>
+                        function onSignIn(googleUser) {
+                            console.log('User is ' + JSON.stringify(googleUser.getBasicProfile()))
+
+                            var element = document.querySelector('#content');
+                            var str_short = (googleUser.getBasicProfile().getName()).split(' ');
+                            var str="";
+                            str_short.forEach(element => {
+                                str = str+element[0];
+                            });
+                            element.innerText = str;//googleUser.getBasicProfile().getName();
+
+                            var image = document.createElement('img');
+                            image.setAttribute('src', googleUser.getBasicProfile().getImageUrl());
+                            image.setAttribute('height',"30px");
+                            image.style.marginLeft="7px";
+                            element.append(image);
+                            document.getElementById('signOut').style.display = 'block';
+
+                            var ulr_add_user = "http://localhost:8080/addOrNotByData/user/"+googleUser.getBasicProfile().getEmail();
+                            $.ajax({
+                                url: ulr_add_user,
+                                type: "POST",
+                                contentType: "application/json; charset=utf-8",
+                            });
+
+                        }
+
+                        function signOut() {
+                            gapi.auth2.getAuthInstance().signOut().then(function() {
+                                console.log('User signed out');
+                                var element = document.querySelector('#content');
+                                element.innerHTML = '';
+                                document.getElementById('signOut').style.display = 'none';
+                            });
+                        }
+                    </script>
+                    <!--
+                    <a class="logon-link" href="login.html" style="float: right; right: 2em; position: absolute;">zaloguj...</a>
+                    <a href="#" style="float: right; right: 2em; position: absolute; display: none;"><img src="img/account_icon.png" style=" height: 2em;" alt=""></a>
+                    -->
+                </div>
+
+                <div class="container w-100">
+                    <div class="w-100" style="background-color: black; margin: 0;min-width: 1000px;">
+                        <table class="w-100">
+                            <tbody class="w-100">
+                                <tr class="w-100">
+                                    <td scope="col" style="text-align: center;min-width: 750px;"><a href="dostepne_utwory.html" class="main-menu-item">Przeglądaj dostępne utwory</a></td>
+                                    <td scope="col" style="text-align: center; border-left: 1px solid white;min-width: 750px;"><a href="statistics.html" class="main-menu-item">Statystyki</a></td>
+                                </tr style="border-right: 1px solid white;">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- Navbar -->
+
+    </header>
+    <!-- /Main Navigation-->
+
+
+    <!-- Main Layout-->
+    <main class="mt-9" style="margin-top: -600px; padding-bottom: 70px;">
+
+        <div class="container my-container-color w-90" id="tab-sec">
+
+            <table class="table table-borderless w-90">
+                <tr>
+                    <td style="text-align: left;">
+                        <h2 class="color-accent">Dostępne piosenki</h2>
+                    </td>
+                    <td style="text-align: right;">
+                        <a onclick="randomSong()">
+                            <img src="img/kostki.png" style="height: 40px;">
+                        </a>
+                    </td>
+                </tr>
+            </table>
+
+
+            <!-- 
+                <table class="table table-hover my-tab-color w-90">
+                    <thead >
+                      <tr>
+                        <th class="col1" scope="col">Numer na liście</th>
+                        <th class="col2" scope="col">Tytuł</th>
+                        <th class="col2" scope="col">Wykonawca</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody id="tab-body">
+                      <tr id="row1">
+                        <td class="col1" scope="row">1.</td>
+                        <td class="col2" id="row1-title">Sit</td>
+                        <td class="col2" id="row1-author">Amet</td>
+                        <td id="row1-play">
+                            <a href="game.html?title=Thriller&author=Michael Jackson">
+                                <img class="play-btn" src="img/play.png">
+                            </a>
+                        </td>
+                      </tr>
+                      <tr id="row2">
+                        <td class="col1" scope="row">2.</td>
+                        <td class="col2" id="row2-title">Adipisicing</td>
+                        <td class="col2" id="row2-author">Elit</td>
+                        <td id="row2-play"><img class="play-btn" src="img/play.png"></td>
+                        </td>
+                      </tr>
+                      <tr id="row3">
+                        <td class="col1" scope="row">3.</td>
+                        <td class="col2" id="row3-title">Hic</td>
+                        <td class="col2" id="row3-author">Fugiat</td>
+                        <td id="row3-play"><img class="play-btn" src="img/play.png"></td>
+                      </tr>
+                      <tr id="row4">
+                        <td class="col1" scope="row">4.</td>
+                        <td class="col2" id="row4-title">Hic</td>
+                        <td class="col2" id="row4-author">Fugiat</td>
+                        <td id="row4-play"><img class="play-btn" src="img/play.png"></td>
+                      </tr>
+                      <tr id="row5">
+                        <td class="col1" scope="row">5.</td>
+                        <td class="col2" id="row5-title">Hic</td>
+                        <td class="col2" id="row5-author">Fugiat</td>
+                        <td id="row5-play"><img class="play-btn" src="img/play.png"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                -->
+
+
+        </div>
+    </main>
+    <!-- /Main Layout-->
+
+
+    <!-- Footer -->
+    <footer>
+        <div>Zaawansowane Technologie Webowe 2021 - Chrząstek, Rudzka</div>
+    </footer>
+    <!-- /Footer -->
+
+    <!-- End your project here-->
+    <!-- jQuery -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+    <!-- Your custom scripts (optional) -->
+    <script type="text/javascript" src="dostepne_utwory.js"></script>
+
+    <script type="text/javascript">
+        /* chart.js chart examples */
+    </script>
+    <script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
+</body>
+
+</html>
